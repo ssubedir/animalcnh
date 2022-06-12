@@ -29,9 +29,8 @@ export class AuthService {
     this.oauth.tokenValidationHandler = new JwksValidationHandler();
     this.oauth.loadDiscoveryDocument().then(()=>{
       this.oauth.tryLoginCodeFlow().then( ()=>{
-        localStorage.setItem("access_token",this.oauth.getAccessToken())
         this.oauth.loadUserProfile().then( (user) =>{
-          localStorage.setItem("id_token",JSON.stringify(user))
+          console.log(user);
         });
         this.router.navigate(['/', 'acnh']);
       })
@@ -39,7 +38,9 @@ export class AuthService {
   }
 
   IsAuthenticated(){
-    if(this.oauth.hasValidAccessToken()){
+    if(this.oauth.hasValidAccessToken() && this.oauth.hasValidIdToken()){
+      console.log("getAccessTokenExpiration",this.oauth.getAccessTokenExpiration());
+      console.log("getIdTokenExpiration",this.oauth.getIdTokenExpiration());
       return true;
     } 
     return false;

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { authCodeFlowConfig } from './config';
@@ -7,9 +8,9 @@ import { authCodeFlowConfig } from './config';
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private readonly oauth:OAuthService) { }
+  constructor(private readonly oauth:OAuthService,private router: Router) { }
 
-  Login(){
+  Token(){
     this.oauth.configure(authCodeFlowConfig);
     this.oauth.tokenValidationHandler = new JwksValidationHandler();
     this.oauth.loadDiscoveryDocument().then(()=>{
@@ -17,11 +18,22 @@ export class AuthService {
         if(!this.oauth.hasValidAccessToken()){
           this.oauth.initCodeFlow();
         } else{
-          localStorage.setItem("access_token",this.oauth.getAccessToken())
-          this.oauth.loadUserProfile().then( (user) =>{
-            localStorage.setItem("id_token",JSON.stringify(user))
-          });
+          this.router.navigate(['/', 'acnh']);
         }
+      })
+    })
+  }
+
+  Login(){
+    this.oauth.configure(authCodeFlowConfig);
+    this.oauth.tokenValidationHandler = new JwksValidationHandler();
+    this.oauth.loadDiscoveryDocument().then(()=>{
+      this.oauth.tryLoginCodeFlow().then( ()=>{
+        localStorage.setItem("access_token",this.oauth.getAccessToken())
+        this.oauth.loadUserProfile().then( (user) =>{
+          localStorage.setItem("id_token",JSON.stringify(user))
+        });
+        this.router.navigate(['/', 'acnh']);
       })
     })
   }
@@ -34,7 +46,6 @@ export class AuthService {
   }
 
   Logout(){
-    console.log("logout in service")
     this.oauth.revokeTokenAndLogout()
     this.oauth.logOut();
   }

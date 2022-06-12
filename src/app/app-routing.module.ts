@@ -30,7 +30,7 @@ const routes: Routes = [
         pathMatch:'full',
       },
       {
-        path:'acnh',canActivate: [],
+        path:'acnh',canActivate: [AuthGuardService],
         loadChildren: (): any => import('../app/acnh/acnh.module').then((m) => m.AcnhModule),
       }
     ]

@@ -5,7 +5,7 @@ export const authCodeFlowConfig: AuthConfig = {
   issuer: 'http://localhost:8080/realms/myrealm',
 
   // URL of the SPA to redirect the user to after login
-  redirectUri: "http://localhost:4200",
+  redirectUri: "http://localhost:4200/auth",
 
   // The SPA's id. The SPA is registerd with this id at the auth-server
   // clientId: 'server.code',

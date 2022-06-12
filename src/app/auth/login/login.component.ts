@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/oauth/auth.service';
 
 @Component({
@@ -9,9 +9,24 @@ import { AuthService } from 'src/app/oauth/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router,private auth:AuthService) { }
+  constructor(private route: ActivatedRoute,private router: Router,private auth:AuthService) { }
 
   ngOnInit(): void {
+
+    if(this.auth.IsAuthenticated()){
+      this.router.navigate(['/', 'acnh']);
+    }
+
+    this.route.queryParams.subscribe(async params => {      
+      let code = params["code"];
+      if(!!code){
+        this.auth.Login();
+        if(this.auth.IsAuthenticated()){
+          this.router.navigate(['/', 'acnh']);
+        }
+      }
+    });
+    
   }
 
   login(){

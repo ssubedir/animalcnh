@@ -8,11 +8,12 @@ import { authCodeFlowConfig } from './config';
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private readonly oauth:OAuthService,private router: Router) { }
-
-  Token(){
+  constructor(private readonly oauth:OAuthService,private router: Router) {
     this.oauth.configure(authCodeFlowConfig);
     this.oauth.tokenValidationHandler = new JwksValidationHandler();
+   }
+
+  Token(){
     this.oauth.loadDiscoveryDocument().then(()=>{
       this.oauth.tryLoginCodeFlow().then( ()=>{
         if(!this.oauth.hasValidAccessToken()){
@@ -39,15 +40,16 @@ export class AuthService {
 
   IsAuthenticated(){
     if(this.oauth.hasValidAccessToken() && this.oauth.hasValidIdToken()){
-      console.log("getAccessTokenExpiration",this.oauth.getAccessTokenExpiration());
-      console.log("getIdTokenExpiration",this.oauth.getIdTokenExpiration());
       return true;
     } 
     return false;
   }
 
   Logout(){
-    this.oauth.revokeTokenAndLogout()
-    this.oauth.logOut();
+    this.oauth.revokeTokenAndLogout().finally(
+      ()=>{
+        this.router.navigate(['/', 'auth']);
+      }
+    )
   }
 }

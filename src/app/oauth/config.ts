@@ -28,4 +28,6 @@ export const authCodeFlowConfig: AuthConfig = {
   showDebugInformation: true,
 
   // strictDiscoveryDocumentValidation: false,
+
+  revocationEndpoint:"http://localhost:8080/realms/myrealm/protocol/openid-connect/revoke",
 };

@@ -6,6 +6,12 @@ const routes: Routes = [
   {
     path: '',
     component: AcnhComponent,
+    children:[
+      {
+        path: "acnh",
+        component: AcnhComponent
+      }
+    ]
   }
 ];
 

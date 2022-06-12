@@ -35,7 +35,7 @@ export class AuthService {
 
   Logout(){
     console.log("logout in service")
-    this.oauth.logOut();
     this.oauth.revokeTokenAndLogout()
+    this.oauth.logOut();
   }
 }

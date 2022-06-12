@@ -3,18 +3,15 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/oauth/auth.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   constructor(private router: Router,private auth:AuthService) { }
 
   ngOnInit(): void {
-    if(this.auth.IsAuthenticated()){
-      this.router.navigate(['/', 'acnh']);
-    }
   }
 
   login(){

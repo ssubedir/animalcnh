@@ -14,9 +14,9 @@ export class AcnhLayoutComponent implements OnInit {
   
   }
   
-  Logout(){
-    console.log("Click logout")
-    this.auth.Logout();
-  }
+  // Logout(){
+  //   console.log("Click logout")
+  //   this.auth.Logout();
+  // }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { authCodeFlowConfig } from './config';
@@ -13,7 +13,8 @@ export class AuthService {
     this.oauth.tokenValidationHandler = new JwksValidationHandler();
    }
 
-  Token(){
+   // Token - initCodeFlow
+   Token(){
     this.oauth.loadDiscoveryDocument().then(()=>{
       this.oauth.tryLoginCodeFlow().then( ()=>{
         if(!this.oauth.hasValidAccessToken()){
@@ -25,6 +26,7 @@ export class AuthService {
     })
   }
 
+  // Login - tryLoginCodeFlow and navigate to /acnh
   Login(){
     this.oauth.configure(authCodeFlowConfig);
     this.oauth.tokenValidationHandler = new JwksValidationHandler();
@@ -38,6 +40,7 @@ export class AuthService {
     })
   }
 
+  // IsAuthenticated - check if tokens are valid
   IsAuthenticated(){
     if(this.oauth.hasValidAccessToken() && this.oauth.hasValidIdToken()){
       return true;
@@ -45,6 +48,7 @@ export class AuthService {
     return false;
   }
 
+  // Logout - logout user
   Logout(){
     this.oauth.revokeTokenAndLogout().finally(
       ()=>{

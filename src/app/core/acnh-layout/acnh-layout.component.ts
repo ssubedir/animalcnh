@@ -11,12 +11,11 @@ export class AcnhLayoutComponent implements OnInit {
   constructor(private auth:AuthService) { }
 
   ngOnInit(): void {
-  
+
   }
-  
-  // Logout(){
-  //   console.log("Click logout")
-  //   this.auth.Logout();
-  // }
+
+  Logout(){
+    this.auth.Logout();
+  }
 
 }

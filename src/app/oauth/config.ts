@@ -2,7 +2,7 @@ import { AuthConfig} from 'angular-oauth2-oidc';
 
 export const authCodeFlowConfig: AuthConfig = {
   // Url of the Identity Provider
-  issuer: 'http://localhost:8080/realms/myrealm',
+  issuer: 'http://localhost:8080/realms/acnh',
 
   // URL of the SPA to redirect the user to after login
   redirectUri: "http://localhost:4200/auth",
@@ -29,5 +29,5 @@ export const authCodeFlowConfig: AuthConfig = {
 
   strictDiscoveryDocumentValidation: false,
 
-  revocationEndpoint:"http://localhost:8080/realms/myrealm/protocol/openid-connect/revoke",
+  revocationEndpoint:"http://localhost:8080/realms/acnh/protocol/openid-connect/revoke",
 };
